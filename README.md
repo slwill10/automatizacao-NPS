@@ -19,3 +19,7 @@ Este projeto foi desenvolvido para auxiliar uma amiga no seu ambiente de trabalh
 * Aplica formatações visuais (cores, bordas, destaques) para facilitar a leitura e interpretação dos dados.
 
 
+<img width="581" alt="Captura de Tela 2025-04-23 às 22 51 55" src="https://github.com/user-attachments/assets/d57c2121-3836-4c2c-9c86-29260190de7b" />
+<img width="639" alt="Captura de Tela 2025-04-23 às 22 52 12" src="https://github.com/user-attachments/assets/419890e1-1fbd-4e3a-8a1a-ef75ae7fa0ea" />
+<img width="658" alt="Captura de Tela 2025-04-23 às 22 52 21" src="https://github.com/user-attachments/assets/7a93d6e8-0b88-4c70-8ba1-f09ec4b07553" />
+<img width="660" alt="Captura de Tela 2025-04-23 às 22 52 42" src="https://github.com/user-attachments/assets/e5a16c94-eed9-43b3-b8c3-6aa91c26a8dd" />
