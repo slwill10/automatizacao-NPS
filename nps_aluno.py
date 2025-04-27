@@ -3,7 +3,7 @@ import pandas as pd
 def gerar_aba_aluno(writer):
 
     df = pd.read_excel('tabela_alunos_e_contratante.xlsx')
-    df = df[df['Qual a sua relação com a ESR? Selecione as opções aplicáveis.'] == 'Aluno'].copy()
+    df = df[df['Unnamed: 13'].notna()]
 
     nota = 'Qual é a probabilidade de você recomendar a ESR a um(a) amigo(a) ou colega?'
 
@@ -39,7 +39,7 @@ def gerar_aba_aluno(writer):
     workbook = writer.book
     worksheet = writer.sheets["NPS Aluno"]
 
-    linha_base = len(df) + 3
+    linha_base = df.shape[0] + 10
 
     bold = workbook.add_format({'bold': True, 'border': 1})
 

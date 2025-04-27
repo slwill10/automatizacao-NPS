@@ -39,7 +39,7 @@ def gerar_aba_contratante(writer):
     workbook = writer.book
     worksheet = writer.sheets["NPS Contratante"]
 
-    linha_base = len(df) + 3
+    linha_base = df.shape[0] + 10
 
     bold = workbook.add_format({'bold': True, 'border': 1})
 

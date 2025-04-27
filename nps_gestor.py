@@ -35,7 +35,7 @@ def gerar_aba_gestor(writer):
     workbook = writer.book
     worksheet = writer.sheets["NPS Gestor"]
 
-    linha_base = len(df) + 3
+    linha_base = df.shape[0] + 10
 
     bold = workbook.add_format({'bold': True, 'border': 1})
 
@@ -79,6 +79,17 @@ def gerar_aba_gestor(writer):
 
     worksheet.set_column('A:A', 35)
     worksheet.set_column('B:C', 15)
+
+    return {
+        "contagem_notas": contagem_notas,
+        "promotores": promotores,
+        "neutros": neutros,
+        "detratores": detratores,
+        "porc_promotores": porc_promotores,
+        "porc_neutros": porc_neutros,
+        "porc_detratores": porc_detratores,
+        "nps": nps
+    }
 
 def calcular_nps_gestor(df):
     nota = 'Qual é a probabilidade de você recomendar a ESR a um(a) amigo(a) ou colega?'
