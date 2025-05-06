@@ -7,42 +7,74 @@ df_gestor = pd.read_excel('planilha_de_gestor.xlsx')
 df_contratante_and_aluno = pd.read_excel('tabela_alunos_e_contratante.xlsx')
 
 def gerar_tabela_resumo_nps(writer):
+    nps_dados = {}
 
-    nps_dados = {
-        "gestor": {
+    # GESTOR
+    if not df_gestor.empty:
+        nps_dados["gestor"] = {
             **calcular_nps_gestor(df_gestor),
             "total": len(df_gestor)
-        },
-        "aluno": {
+        }
+    else:
+        nps_dados["gestor"] = {
+            "nps": 0.0,
+            "promotores": 0,
+            "detratores": 0,
+            "neutros": 0,
+            "total": 0
+        }
+
+    # ALUNO
+    if not df_contratante_and_aluno.empty:
+        nps_dados["aluno"] = {
             **calcular_nps_aluno(df_contratante_and_aluno),
             "total": len(df_contratante_and_aluno)
-        },
-        "contratante": {
+        }
+    else:
+        nps_dados["aluno"] = {
+            "nps": 0.0,
+            "promotores": 0,
+            "detratores": 0,
+            "neutros": 0,
+            "total": 0
+        }
+
+    # CONTRATANTE
+    if not df_contratante_and_aluno.empty:
+        nps_dados["contratante"] = {
             **calcular_nps_contratante(df_contratante_and_aluno),
             "total": len(df_contratante_and_aluno)
         }
-    }
+    else:
+        nps_dados["contratante"] = {
+            "nps": 0.0,
+            "promotores": 0,
+            "detratores": 0,
+            "neutros": 0,
+            "total": 0
+        }
 
     resumo_df = pd.DataFrame([
         {
             'Categoria': 'NPS gestor',
             'Total de respondentes': nps_dados['gestor']['total'],
-            '%': f"{nps_dados['gestor']['nps']:.1f}%"
+            '%': f"{nps_dados['gestor']['nps']:.1f}%" if nps_dados['gestor']['total'] > 0 else ""
         },
         {
             'Categoria': 'NPS aluno',
             'Total de respondentes': nps_dados['aluno']['total'],
-            '%': f"{nps_dados['aluno']['nps']:.1f}%"
+            '%': f"{nps_dados['aluno']['nps']:.1f}%" if nps_dados['aluno']['total'] > 0 else ""
         },
         {
             'Categoria': 'NPS contratante_pós vendas',
             'Total de respondentes': nps_dados['contratante']['total'],
-            '%': f"{nps_dados['contratante']['nps']:.1f}%"
+            '%': f"{nps_dados['contratante']['nps']:.1f}%" if nps_dados['contratante']['total'] > 0 else ""
         },
         {
             'Categoria': 'NPS ESR',
             'Total de respondentes': sum([nps_dados[c]['total'] for c in nps_dados]),
             '%': f"{sum([nps_dados[c]['nps'] * nps_dados[c]['total'] for c in nps_dados]) / max(1, sum([nps_dados[c]['total'] for c in nps_dados])):.1f}%"
+            if sum([nps_dados[c]['total'] for c in nps_dados]) > 0 else ""
         }
     ])
 
@@ -51,7 +83,6 @@ def gerar_tabela_resumo_nps(writer):
     workbook = writer.book
 
     header_format = workbook.add_format({'bold': True, 'bg_color': '#FBE4D5', 'border': 1})
-    destaque_format = workbook.add_format({'bold': True, 'bg_color': '#FBE4D5', 'border': 1})
     red_text = workbook.add_format({'font_color': 'red', 'border': 1})
     border_format = workbook.add_format({'border': 1})
 

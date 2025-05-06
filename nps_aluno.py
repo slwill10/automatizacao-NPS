@@ -36,7 +36,8 @@ def gerar_aba_aluno(writer, arquivo):
     detratores = 0 
 
     for n in df['nota_do_aluno']:
-        contagem_notas[int(n)] += 1
+        nota_int = int(n)
+        contagem_notas[nota_int] += 1
         if n >= 9:
             promotores += 1
         elif 7 <= n <= 8:
