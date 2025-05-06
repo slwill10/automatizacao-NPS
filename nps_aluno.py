@@ -1,8 +1,24 @@
 import pandas as pd
+import os 
 
-def gerar_aba_aluno(writer):
+def ler_arquivo(arquivo_path):
+    if isinstance(arquivo_path, str):
+        extensao = arquivo_path.split('.')[-1].lower()
+    else:
+        extensao = arquivo_path.name.split('.')[-1].lower()
 
-    df = pd.read_excel('tabela_alunos_e_contratante.xlsx')
+    if extensao == 'csv':
+        return pd.read_csv(arquivo_path)
+    elif extensao == 'xlsx':
+        return pd.read_excel(arquivo_path, engine='openpyxl')
+    elif extensao == 'xls':
+        return pd.read_excel(arquivo_path)  
+    else:
+        raise ValueError(f"Formato de arquivo não suportado: {extensao}")  
+
+def gerar_aba_aluno(writer, arquivo):
+
+    df = ler_arquivo(arquivo)
     df = df[df['Unnamed: 13'].notna()]
 
     nota = 'Qual é a probabilidade de você recomendar a ESR a um(a) amigo(a) ou colega?'

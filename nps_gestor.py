@@ -1,8 +1,25 @@
 import pandas as pd
+import os
 
-def gerar_aba_gestor(writer):
+def ler_arquivo(arquivo_path):
 
-    df = pd.read_excel('planilha_de_gestor.xlsx')
+    if isinstance(arquivo_path, str):
+        extensao = arquivo_path.split('.')[-1].lower()
+    else:
+        extensao = arquivo_path.name.split('.')[-1].lower()
+
+    if extensao == 'csv':
+        return pd.read_csv(arquivo_path)
+    elif extensao == 'xlsx':
+        return pd.read_excel(arquivo_path, engine='openpyxl')
+    elif extensao == 'xls':
+        return pd.read_excel(arquivo_path)  
+    else:
+        raise ValueError(f"Formato de arquivo não suportado: {extensao}")  
+
+def gerar_aba_gestor(writer, arquivo):
+
+    df = ler_arquivo(arquivo)
 
     nota = 'Qual é a probabilidade de você recomendar a ESR a um(a) amigo(a) ou colega?'
 
